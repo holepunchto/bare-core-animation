@@ -22,7 +22,7 @@ view.wantsLayer = true
 const layer = Layer.of(view)
 
 layer.cornerRadius = 12
-layer.maskedCorners = Layer.CORNER.MIN_X_MIN_Y | Layer.CORNER.MAX_X_MIN_Y
+layer.maskedCorners = Layer.CORNER_MASK.MIN_X_MIN_Y | Layer.CORNER_MASK.MAX_X_MIN_Y
 layer.backgroundColor = { red: 0.2, green: 0.4, blue: 1 }
 layer.shadowOpacity = 0.3
 

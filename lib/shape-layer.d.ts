@@ -2,10 +2,7 @@ import { Wrapper } from 'bare-foundation-registry'
 import CoreAnimationLayer = require('./layer')
 
 /** A layer that draws a path. */
-declare class CoreAnimationShapeLayer extends CoreAnimationLayer {
-  /** Create a new shape layer with no path. */
-  constructor()
-
+interface CoreAnimationShapeLayer extends CoreAnimationLayer {
   /**
    * The path to draw, from another addon, such as an `NSBezierPath` or a `UIBezierPath`. Set it to
    * `null` to draw nothing.
@@ -24,6 +21,11 @@ declare class CoreAnimationShapeLayer extends CoreAnimationLayer {
 
   /** The lengths of the dashes and gaps in the stroke. An empty list draws a solid line. */
   set lineDashPattern(pattern: number[])
+}
+
+declare class CoreAnimationShapeLayer {
+  /** Create a new shape layer with no path. */
+  constructor()
 }
 
 export = CoreAnimationShapeLayer

@@ -1,20 +1,7 @@
 import { tag, handle, Handle, Wrapper } from 'bare-foundation-registry'
 
 /** A Core Animation layer: a rectangle that draws content and can hold other layers. */
-declare class CoreAnimationLayer {
-  /** Create a new, empty layer. */
-  constructor()
-
-  /**
-   * Return the layer of a view from another addon, such as an `NSView` or a `UIView`. Returns
-   * `null` if the view has no layer yet. On macOS, set `wantsLayer` on the view first.
-   * @throws A `TypeError` when the object is not a view.
-   */
-  static of(view: Wrapper): CoreAnimationLayer | null
-
-  /** The corner flags used by `maskedCorners`. */
-  static readonly CORNER: CoreAnimationLayer.Corners
-
+interface CoreAnimationLayer {
   /** How round the corners are, in points. */
   cornerRadius: number
 
@@ -39,7 +26,7 @@ declare class CoreAnimationLayer {
   /** Whether sublayers are clipped to the bounds of the layer. */
   masksToBounds: boolean
 
-  /** Which corners `cornerRadius` applies to, as `CORNER` flags combined with `|`. */
+  /** Which corners `cornerRadius` applies to, as `CORNER_MASK` flags combined with `|`. */
   maskedCorners: number
 
   /** The background color. A component that is left out is 0, except `alpha`, which is 1. */
@@ -94,7 +81,23 @@ declare class CoreAnimationLayer {
   setNeedsDisplay(): this
 
   readonly [tag]: number
+
   readonly [handle]: Handle
+}
+
+declare class CoreAnimationLayer {
+  /** Create a new, empty layer. */
+  constructor()
+
+  /**
+   * Return the layer of a view from another addon, such as an `NSView` or a `UIView`. Returns
+   * `null` if the view has no layer yet. On macOS, set `wantsLayer` on the view first.
+   * @throws A `TypeError` when the object is not a view.
+   */
+  static of(view: Wrapper): CoreAnimationLayer | null
+
+  /** The corner flags used by `maskedCorners`. */
+  static readonly CORNER_MASK: CoreAnimationLayer.Corners
 }
 
 declare namespace CoreAnimationLayer {

@@ -1,4 +1,5 @@
+import DisplayLink = require('./lib/display-link')
 import Layer = require('./lib/layer')
 import ShapeLayer = require('./lib/shape-layer')
 
-export { Layer, ShapeLayer }
+export { DisplayLink, Layer, ShapeLayer }
