@@ -35,6 +35,7 @@
   "author": "Holepunch",
   "license": "Apache-2.0",
   "dependencies": {
+    "bare-events": "^2.8.2",
     "bare-foundation-registry": "^0.1.0"
   },
   "devDependencies": {

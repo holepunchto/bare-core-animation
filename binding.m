@@ -2,6 +2,7 @@
 #import <bare.h>
 #import <js.h>
 
+#import "lib/display-link.h"
 #import "lib/layer.h"
 #import "lib/shape-layer.h"
 
@@ -34,6 +35,16 @@ bare_core_animation_exports(js_env_t *env, js_value_t *exports) {
   V("registrySize", bare_foundation_registry_size)
   V("handle", bare_foundation_handle)
   V("adopt", bare_foundation_adopt)
+
+  V("displayLinkInit", bare_core_animation_display_link_init)
+  V("displayLinkOf", bare_core_animation_display_link_of)
+  V("displayLinkAddToRunLoop", bare_core_animation_display_link_add_to_run_loop)
+  V("displayLinkRemoveFromRunLoop", bare_core_animation_display_link_remove_from_run_loop)
+  V("displayLinkInvalidate", bare_core_animation_display_link_invalidate)
+  V("displayLinkPaused", bare_core_animation_display_link_paused)
+  V("displayLinkTimestamp", bare_core_animation_display_link_timestamp)
+  V("displayLinkTargetTimestamp", bare_core_animation_display_link_target_timestamp)
+  V("displayLinkDuration", bare_core_animation_display_link_duration)
 
   V("layerInit", bare_core_animation_layer_init)
 

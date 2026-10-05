@@ -1,6 +1,7 @@
 #pragma once
 
 #import <assert.h>
+#import <stdlib.h>
 #import <js.h>
 
 #import <CoreGraphics/CoreGraphics.h>
@@ -21,6 +22,38 @@ bare_core_animation__read_number(js_env_t *env, js_value_t *value, const char *n
   assert(err == 0);
 
   return false;
+}
+
+// Autoreleased, so it is read inside the pool that it is used in.
+static NSString *
+bare_core_animation__read_string(js_env_t *env, js_value_t *value, const char *name) {
+  int err;
+
+  js_value_type_t type;
+  err = js_typeof(env, value, &type);
+  assert(err == 0);
+
+  if (type != js_string) {
+    err = js_throw_type_errorf(env, NULL, "Expected a string for '%s'", name);
+    assert(err == 0);
+
+    return nil;
+  }
+
+  size_t len;
+  err = js_get_value_string_utf8(env, value, NULL, 0, &len);
+  assert(err == 0);
+
+  utf8_t *bytes = malloc(len + 1);
+
+  err = js_get_value_string_utf8(env, value, bytes, len + 1, NULL);
+  assert(err == 0);
+
+  NSString *result = [[[NSString alloc] initWithBytes:bytes length:len encoding:NSUTF8StringEncoding] autorelease];
+
+  free(bytes);
+
+  return result;
 }
 
 static bool

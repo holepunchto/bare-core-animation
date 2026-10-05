@@ -1,2 +1,3 @@
 # https://github.com/holepunchto/lunte/issues/17
+lib/display-link.d.ts
 lib/layer.d.ts
