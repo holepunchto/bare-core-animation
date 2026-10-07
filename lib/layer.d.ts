@@ -68,6 +68,30 @@ interface CoreAnimationLayer {
   get mask(): CoreAnimationLayer | null
   set mask(layer: Wrapper | null)
 
+  /**
+   * Convert a point from the layer's coordinate space to that of `layer`, including the transforms
+   * between them.
+   */
+  convertPointToLayer(x: number, y: number, layer?: Wrapper | null): CoreAnimationLayer.Point
+
+  /** Convert a point from the coordinate space of `layer` to the layer's own. */
+  convertPointFromLayer(x: number, y: number, layer?: Wrapper | null): CoreAnimationLayer.Point
+
+  /**
+   * Convert a rectangle from the layer's coordinate space to that of `layer`. Under a transform
+   * that is not a translation, the result is the smallest rectangle containing the converted one.
+   */
+  convertRectToLayer(
+    rect: Partial<CoreAnimationLayer.Rect>,
+    layer?: Wrapper | null
+  ): CoreAnimationLayer.Rect
+
+  /** Convert a rectangle from the coordinate space of `layer` to the layer's own. */
+  convertRectFromLayer(
+    rect: Partial<CoreAnimationLayer.Rect>,
+    layer?: Wrapper | null
+  ): CoreAnimationLayer.Rect
+
   /** Add `layer` on top of the other sublayers. */
   addSublayer(layer: Wrapper): this
 

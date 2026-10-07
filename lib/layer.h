@@ -412,6 +412,176 @@ bare_core_animation_layer_mask(js_env_t *env, js_callback_info_t *info) {
 }
 
 static js_value_t *
+bare_core_animation_layer_convert_point_to_layer(js_env_t *env, js_callback_info_t *info) {
+  int err;
+
+  size_t argc = 4;
+  js_value_t *argv[4];
+
+  bare_foundation_registry_t *registry;
+  err = js_get_callback_info(env, info, &argc, argv, NULL, (void **) &registry);
+  assert(err == 0);
+
+  assert(argc == 4);
+
+  void *handle;
+  if (bare_foundation_read_tag(env, registry, argv[0], "handle", &handle) < 0) return NULL;
+
+  double x, y;
+  if (!bare_core_animation__read_double(env, argv[1], "x", &x)) return NULL;
+  if (!bare_core_animation__read_double(env, argv[2], "y", &y)) return NULL;
+
+  js_value_type_t type;
+  err = js_typeof(env, argv[3], &type);
+  assert(err == 0);
+
+  void *other = NULL;
+
+  if (type != js_null && type != js_undefined) {
+    if (bare_foundation_read_tag(env, registry, argv[3], "layer", &other) < 0) return NULL;
+  }
+
+  js_value_t *result;
+
+  @autoreleasepool {
+    CGPoint point = [(__bridge CALayer *) handle convertPoint:CGPointMake(x, y) toLayer:(__bridge CALayer *) other];
+
+    result = bare_core_animation__from_point(env, point);
+  }
+
+  return result;
+}
+
+static js_value_t *
+bare_core_animation_layer_convert_point_from_layer(js_env_t *env, js_callback_info_t *info) {
+  int err;
+
+  size_t argc = 4;
+  js_value_t *argv[4];
+
+  bare_foundation_registry_t *registry;
+  err = js_get_callback_info(env, info, &argc, argv, NULL, (void **) &registry);
+  assert(err == 0);
+
+  assert(argc == 4);
+
+  void *handle;
+  if (bare_foundation_read_tag(env, registry, argv[0], "handle", &handle) < 0) return NULL;
+
+  double x, y;
+  if (!bare_core_animation__read_double(env, argv[1], "x", &x)) return NULL;
+  if (!bare_core_animation__read_double(env, argv[2], "y", &y)) return NULL;
+
+  js_value_type_t type;
+  err = js_typeof(env, argv[3], &type);
+  assert(err == 0);
+
+  void *other = NULL;
+
+  if (type != js_null && type != js_undefined) {
+    if (bare_foundation_read_tag(env, registry, argv[3], "layer", &other) < 0) return NULL;
+  }
+
+  js_value_t *result;
+
+  @autoreleasepool {
+    CGPoint point = [(__bridge CALayer *) handle convertPoint:CGPointMake(x, y) fromLayer:(__bridge CALayer *) other];
+
+    result = bare_core_animation__from_point(env, point);
+  }
+
+  return result;
+}
+
+static js_value_t *
+bare_core_animation_layer_convert_rect_to_layer(js_env_t *env, js_callback_info_t *info) {
+  int err;
+
+  size_t argc = 6;
+  js_value_t *argv[6];
+
+  bare_foundation_registry_t *registry;
+  err = js_get_callback_info(env, info, &argc, argv, NULL, (void **) &registry);
+  assert(err == 0);
+
+  assert(argc == 6);
+
+  void *handle;
+  if (bare_foundation_read_tag(env, registry, argv[0], "handle", &handle) < 0) return NULL;
+
+  double v[4];
+  static const char *names[] = {"x", "y", "width", "height"};
+
+  for (size_t i = 0; i < 4; i++) {
+    if (!bare_core_animation__read_double(env, argv[i + 1], names[i], &v[i])) return NULL;
+  }
+
+  js_value_type_t type;
+  err = js_typeof(env, argv[5], &type);
+  assert(err == 0);
+
+  void *other = NULL;
+
+  if (type != js_null && type != js_undefined) {
+    if (bare_foundation_read_tag(env, registry, argv[5], "layer", &other) < 0) return NULL;
+  }
+
+  js_value_t *result;
+
+  @autoreleasepool {
+    CGRect rect = [(__bridge CALayer *) handle convertRect:bare_core_animation__make_rect(v) toLayer:(__bridge CALayer *) other];
+
+    result = bare_core_animation__from_rect(env, rect);
+  }
+
+  return result;
+}
+
+static js_value_t *
+bare_core_animation_layer_convert_rect_from_layer(js_env_t *env, js_callback_info_t *info) {
+  int err;
+
+  size_t argc = 6;
+  js_value_t *argv[6];
+
+  bare_foundation_registry_t *registry;
+  err = js_get_callback_info(env, info, &argc, argv, NULL, (void **) &registry);
+  assert(err == 0);
+
+  assert(argc == 6);
+
+  void *handle;
+  if (bare_foundation_read_tag(env, registry, argv[0], "handle", &handle) < 0) return NULL;
+
+  double v[4];
+  static const char *names[] = {"x", "y", "width", "height"};
+
+  for (size_t i = 0; i < 4; i++) {
+    if (!bare_core_animation__read_double(env, argv[i + 1], names[i], &v[i])) return NULL;
+  }
+
+  js_value_type_t type;
+  err = js_typeof(env, argv[5], &type);
+  assert(err == 0);
+
+  void *other = NULL;
+
+  if (type != js_null && type != js_undefined) {
+    if (bare_foundation_read_tag(env, registry, argv[5], "layer", &other) < 0) return NULL;
+  }
+
+  js_value_t *result;
+
+  @autoreleasepool {
+    CGRect rect = [(__bridge CALayer *) handle convertRect:bare_core_animation__make_rect(v) fromLayer:(__bridge CALayer *) other];
+
+    result = bare_core_animation__from_rect(env, rect);
+  }
+
+  return result;
+}
+
+static js_value_t *
 bare_core_animation_layer_add_sublayer(js_env_t *env, js_callback_info_t *info) {
   int err;
 
